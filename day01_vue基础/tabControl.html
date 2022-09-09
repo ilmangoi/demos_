@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue学习使用</title>
+  <style>
+    .active {
+      color: red;
+      transition: all 2s;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li @click="setNav('a')" :class="{active:a}">aaa</li>
+      <li @click="setNav('b')" :class="{active:b}">bbb</li>
+      <li @click="setNav('c')" :class="{active:c}">ccc</li>
+    </ul>
+    <ul>
+      <li v-if="a">11111</li>
+      <li v-if="b">22222</li>
+      <li v-if="c">33333</li>
+    </ul>
+  </div>
+
+  <script type="module">
+    import Vue from '../../node_modules/vue/dist/vue.esm.browser.js'
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        a: true,
+        b: false,
+        c: false
+      },
+      methods: {
+        setNav(attrName) {
+          this.a = false
+          this.b = false
+          this.c = false
+          this[attrName] = true
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue学习使用</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ title }}</h1>
+    <hr>
+    <div v-html="title"></div>
+    <div v-text="title"></div>
+    <input type="text" v-model="title">
+    <hr>
+    {{title}}
+  </div>
+  <script type="module">
+    import Vue from './myvue.js'
+    // 响应式数据
+    const vm = new Vue({
+      el: '#app',
+      // 在vue2中，优化的手段：定义的数据源尽可能的扁平化
+      // Vue中如果你不想让一个数据变为响应性的，可以把它冻结起来Object.freeze({id:1})
+      data: {
+        // 对于一般属性数据进行劫持
+        age: 20,
+        // title: '<h3>hello vue</h3>'
+        title: 'hello vue',
+        // 多层级中的数据，进行递归来完成劫持
+        user: { id: 100 },
+        // 对于数组中的数据，进行重写对应相相关方法来完成劫持
+        // 数组中可能还会有对象，对象中还可能有数组，在vue中都去考虑
+        arr: [1, 2, 3]
+      }
+    })
+
+    // Object.freeze({id:1})
+    // 检查当时对象是否冻结
+    // Object.isFrozen()
+
+    // console.log(vm.user);
+    // setTimeout(() => {
+    //   // vm.user = { ...vm.user, id: 10 }
+    //   vm.user.id = 10
+    //   console.log(vm.$data)
+    // }, 1000);
+
+
+    setTimeout(() => {
+      // 对于数组，就可以使用变异方法来完成监听
+      vm.arr.push(666)
+      // console.log(vm.$data)
+    }, 1000);
+
+
+    // // 数组中的原方法
+    // var arrayProto = Array.prototype;
+    // // 修改数组中的原型链中的方法，而不能去修改原型中方法，因为全局都会受到影响
+    // var arrayMethods = Object.create(arrayProto);
+    // // 对于原方法一定要提前保存起来，不然就会有重复引用，死循环
+    // var original = arrayProto.push
+    // // 重写的是当前的原型链中的方法，说白了就是你自己的的方法，而不是全局中的方法
+    // arrayMethods.__proto__.push = function (args) {
+    //   original.call(this, args)
+    //   console.log('通知视图来更新', args);
+    // }
+    // let arr = [1, 2, 3]
+    // arr.push(666)
+
+  </script>
+
+</body>
+
+</html>

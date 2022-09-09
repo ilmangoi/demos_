@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <template id="goods">
+      <div class="goodsList">
+        <div class="products" v-for="item,index of goodsList" :keys="item.id">
+          <img :src="item.imgSrc" alt="" />
+          <div class="name">商品名：{{item.name}}</div>
+          <div class="price">价格：￥{{item.price}}</div>
+          <div class="shopping" @click="clickFn($event)"><b>+</b>加入购物车</div>
+        </div>
+      </div>
+    </template>
+
+    <template id="cart">
+      <div class="cart">
+        <table width="900">
+          <tr>
+            <th>id</th>
+            <th>图片</th>
+            <th>名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>操作</th>
+          </tr>
+          <tr v-for="item,index in carts" :keys="item.id">
+            <td>{{item.id}}</td>
+            <td><img :src="item.imgSrc" alt="" /></td>
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>
+              <button @click="setNum(1,item.id)"><b>+</b></button>
+              <input type="number" v-model="item.num" />
+              <button @click="setNum(-1,item.id)"><b>-</b></button>
+            </td>
+            <td>
+              <button @click="del(item.id)">删除</button>
+            </td>
+          </tr>
+        </table>
+        <hr />
+        <h3>合计：{{totalPrice}}</h3>
+      </div>
+    </template>
+
+    <div id="app">
+      <goods></goods>
+      <cart></cart>
+    </div>
+
+    <script type="module">
+      window.axios = axios //将axios挂载到window上
+      import './js/app.js'
+    </script>
+  </body>
+</html>

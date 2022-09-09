@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue学习使用</title>
+</head>
+
+<body>
+  <div id="app">
+    <input placeholder="请输入内容" type="text" v-model="title" @keyup.enter="onEnter">
+    <hr>
+    <ul>
+      <li v-if="todos.length===0">无任务</li>
+      <li v-else v-for="item,index in todos" :key="item.id">
+        <span>{{item.title}}</span>
+        <span @click="del(index)">删除</span>
+      </li>
+    </ul>
+  </div>
+
+  <script type="module">
+    import Vue from '../../node_modules/vue/dist/vue.esm.browser.js'
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        todos: [],
+        title: ''
+      },
+      methods: {
+        onEnter() {
+          this.todos.push({
+            id: Date.now(),
+            title: this.title
+          })
+          this.title = ''
+        },
+        del(index) {
+          this.todos.splice(index, 1)
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

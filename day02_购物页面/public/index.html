@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/product.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="list">
+        <div class="products" v-for="item,index of products" :keys="item.id">
+          <img :src="item.imgSrc" alt="" />
+          <div class="name">商品名：{{item.name}}</div>
+          <div class="price">价格：￥{{item.price}}</div>
+          <div class="shopping" @click="clickFn($event)"><b>+</b>加入购物车</div>
+        </div>
+      </div>
+      <table width="900">
+        <tr>
+          <th>id</th>
+          <th>图片</th>
+          <th>名称</th>
+          <th>单价</th>
+          <th>数量</th>
+          <th>操作</th>
+        </tr>
+        <tr v-for="item,index in carts" :keys="item.id">
+          <td>{{item.id}}</td>
+          <td><img :src="item.imgSrc" alt="" /></td>
+          <td>{{item.name}}</td>
+          <td>{{item.price}}</td>
+          <td>
+            <button @click="setNum(1,item.id)"><b>+</b></button>
+            <input type="number" v-model="item.num" />
+            <button @click="setNum(-1,item.id)"><b>-</b></button>
+          </td>
+          <td>
+            <button @click="del(item.id)">删除</button>
+          </td>
+        </tr>
+      </table>
+      <hr />
+      <h3>合计：{{totalPrice}}</h3>
+    </div>
+    <script type="module">
+      import Vue from '../node_modules/vue/dist/vue.esm.browser.js';
+
+      function setCarts(carts) {
+        window.localStorage.setItem("carts", JSON.stringify(carts));
+      }
+
+      function getCarts() {
+        return !window.localStorage.getItem("carts")
+          ? []
+          : JSON.parse(window.localStorage.getItem("carts"));
+      }
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          carts: getCarts(),
+          products:[
+            {id:1,imgSrc:"./img/1.jpg",name:'商品名：悦花|得揽星河',price:99},
+            {id:2,imgSrc:"./img/2.jpg",name:'商品名：悦花|得揽星河',price:99},
+            {id:3,imgSrc:"./img/3.jpg",name:'商品名：悦花|得揽星河',price:99},
+            {id:4,imgSrc:"./img/4.jpg",name:'商品名：悦花|得揽星河',price:99},
+            {id:5,imgSrc:"./img/5.jpg",name:'商品名：悦花|得揽星河',price:99}
+          ]
+        },
+        computed: {
+          totalPrice() {
+            return this.carts.reduce((prev, item) => {
+              return prev + item.price * item.num;
+            }, 0);
+          }
+        },
+        watch: {
+          carts: {
+            handler() {
+              setCarts(this.carts);
+            },
+            deep: true
+          }
+        },
+        methods: {
+          clickFn(event) {
+            const data = this.products[Number(event.target.parentElement.getAttribute('keys'))-1]
+            const item = this.carts.find((item) => item.id === Number(event.target.parentElement.getAttribute('keys')))
+            if (item) {
+              this.setNum(1, item.id);
+            } else {
+              data.num = 1
+              this.carts.push(data)
+            }
+          },
+          setNum(n, id) {
+            const item = this.carts.find((item) => item.id === id)
+            item.num += n;
+            item.num = Math.min(10,Math.max(1, item.num));
+            this.$forceUpdate();
+          },
+          del(id) {
+            if (confirm("确定删除咩？")) {
+              const index = this.carts.findIndex((item) => item.id === id)
+              this.carts.splice(index, 1);
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

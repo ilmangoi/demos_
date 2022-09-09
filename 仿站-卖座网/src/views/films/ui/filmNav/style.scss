@@ -1,0 +1,19 @@
+// 由于这里的是scoped，所以这里的样式只对当前组件有效
+// 如果想要全局生效，可以在src/assets/css/global.scss中写
+// 或者使用样式穿透 ::v-deep
+.van-tabs-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100;
+  background: #fff;
+}
+::v-deep {
+  .navtitle {
+    color: #ff5f16;
+  }
+  .van-tabs__line {
+    background-color: #ff5f16;
+  }
+}

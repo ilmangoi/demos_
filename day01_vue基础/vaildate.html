@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue学习使用</title>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <input type="text" v-validate.phone v-model="phone">
+    </div>
+    <div>
+      <input type="text" v-validate.email v-model="email">
+    </div>
+    <div>
+      <input type="text" v-validate.str="{len:3,msg:'长度过短'}" v-model="str">
+    </div>
+  </div>
+
+  <script type="module">
+    import Vue from '../../node_modules/vue/dist/vue.esm.browser.js'
+
+    const validateMethod = {
+      phone(el) {
+        let reg = /^1[3-9]\d{9}$/
+        if (!reg.test(el.value)) {
+          el.style.color = 'red'
+          if (!el.nextSibling) {
+            const spanDom = document.createElement('span')
+            spanDom.innerHTML = '不合法,修改一下'
+            el.parentNode && el.parentNode.appendChild(spanDom)
+          }
+        } else {
+          el.style.color = 'black'
+          el.nextSibling && el.nextSibling.remove()
+        }
+        console.log('phone');
+      },
+      email(el, value) {
+        console.log('email')
+      },
+      str(el, value) {
+        if (value) {
+          if (el.value.length > value.len) {
+            if (!el.nextSibling) {
+              const spanDom = document.createElement('span')
+              spanDom.innerHTML = value.msg
+              el.parentNode?.appendChild(spanDom)
+            }
+          } else {
+            el.nextSibling?.remove()
+          }
+        }
+      }
+    }
+
+    Vue.directive('validate', (el, { value, modifiers }) => {
+      Object.keys(modifiers).forEach(name => {
+        validateMethod[name](el, value)
+      })
+    })
+
+    const vm1 = new Vue({
+      el: '#app',
+      data: {
+        phone: '13525125121',
+        email: 'aa@aa.com',
+        str: 'aaa'
+      }
+    })
+  </script>
+</body>
+
+</html>
