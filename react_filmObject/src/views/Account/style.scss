@@ -1,0 +1,19 @@
+.account-formarea-container {
+  display: flex;
+  justify-content: space-between;
+
+  > div:first-child {
+    width: 500px;
+  }
+
+  .account-formarea-excel-btn {
+    margin-right: 10px;
+    background: #67c23a;
+    border: none;
+    color: white;
+  }
+}
+
+.account-datatable-container {
+  margin-top: 5px;
+}

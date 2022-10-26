@@ -1,0 +1,1 @@
+{"version":3,"sources":["src/index.ts"],"names":[],"mappings":";;AAAA,OAAO,CAAC,GAAR;AAEA,IAAI,WAAW,CAAC,OAAhB,GAA0B,QAA1B","file":"src.f10117fe.js","sourceRoot":"..","sourcesContent":["console.log(process.env.NODE_ENV)\n\nnew MyNamespace.MyClass().myMethod()\n"]}

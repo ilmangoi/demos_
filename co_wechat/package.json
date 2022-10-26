@@ -1,0 +1,17 @@
+{
+  "name": "02_co",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "co-wechat": "^2.4.0",
+    "dotenv": "^16.0.3",
+    "koa2": "^2.0.0-alpha.7"
+  }
+}

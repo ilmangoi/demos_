@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./modules/axios.js"></script>
+  <script src="./modules/spark-md5.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="" id="form">
+    <input type="file" id="file">
+    <button>提交</button>
+  </form>
+
+  <script type="module">
+    import Http from "./utils/http.js"
+    import { fileToBinary, delay } from "./utils/tools.js"
+    import { uploadChunkFileApi, mergeChunkFileApi, isVideoExistApi } from './api/videoApi.js'
+
+    const form = document.getElementById('form')
+    const fileInp = document.getElementById('file')
+    const partNum = 10
+    const http = new Http()
+
+    // 登录
+    http.post('/users/login', {
+      username: 'admin',
+      password: '123456'
+    }).then(res => {
+      localStorage.setItem('token', res.data.token)
+    })
+
+
+    async function complete(hash, ext) {
+      await delay(); // 延迟一下, 等待后端处理
+      await mergeChunkFileApi({ hash, ext }); // 告诉后端, 所有的分片文件都上传完了, 可以合并了
+      console.log('合并完成');
+    };
+
+    async function retransmission(request, retransmissionTime) {
+      if (retransmissionTime > 3) {
+        console.log('重传次数超过3次, 上传失败');
+        return;
+      }
+      let res;
+      try {
+        res = await request()
+      } catch (error) { // 对上传的结果进行处理，比如上传失败，可以重新上传
+        return await retransmission(request, retransmissionTime + 1)
+      }
+      if (res.code !== 0) await retransmission(request, retransmissionTime + 1);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault() // 阻止默认事件
+      const rawFile = fileInp.files[0]  // 获取文件
+      let partSize = rawFile.size / partNum; // 每一片的大小
+      let currentIndex = 0; // 切片的索引
+      let buffer = await fileToBinary(rawFile, "buffer"); // 读取文件,返回ArrayBuffer
+
+      let spark = new SparkMD5.ArrayBuffer(); // 把得到的buffer计算出来一个hash值
+      spark.append(buffer);
+      let hash = spark.end();
+      let extName = rawFile.name.split(".").pop(); // 获取文件后缀名
+
+      // 判断文件是否已经上传过
+      const isExist = await isVideoExistApi({ filename: `${hash}.${extName}` })
+      if (isExist) {
+        console.log('文件已存在', isExist);
+        return
+      }
+
+      let partList = []; // 保存每一片的信息
+      for (let i = 0; i < partNum; i++) {
+        let chunk = rawFile.slice(currentIndex, (i + 1) * partSize);
+        partList.push({
+          filename: `${hash}_${i}.${extName}`,
+          chunk,
+        });
+        currentIndex += partSize;
+      }
+
+      // 按照序号上传分片文件, 先把所有的小文件要上传的请求给放到一个数组中
+      // let requestList = [ ajax1, ajax2, ajax3 ]
+      let requestList = []; // 保存所有的请求, 方便断点续传
+      partList.forEach(({ filename, chunk }) => {
+        const requestFn = async () => {
+          const formData = new FormData(); // 使用formData上传文件
+          formData.append("filename", filename);
+          formData.append("chunk", chunk);
+          return await uploadChunkFileApi(formData);
+        };
+        requestList.push(requestFn);
+      });
+
+      // 串行上传
+      for await (const request of requestList) {
+        let res;
+        try {
+          res = await request()
+        } catch (error) { // 对上传的结果进行处理，比如上传失败，可以重新上传
+          return await retransmission(request, 0)
+        }
+        if (res.code !== 0) await retransmission(request, 0);
+      }
+      await complete(hash, extName);
+    })
+  </script>
+</body>
+
+</html>

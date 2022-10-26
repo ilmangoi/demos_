@@ -1,0 +1,18 @@
+.auth-container {
+  position: relative;
+
+  .auth-add-btn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+
+    .ant-btn-primary {
+      margin-left: 10px;
+      border: none;
+
+      &:last-child {
+        background: #67c23a;
+      }
+    }
+  }
+}

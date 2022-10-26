@@ -1,0 +1,12 @@
+.role-formarea-container {
+  display: flex;
+  justify-content: space-between;
+
+  > div:first-child {
+    width: 500px;
+  }
+}
+
+.role-datatable-container {
+  margin-top: 5px;
+}

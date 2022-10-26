@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- 移动端开发时，此声明一定要有 -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <title>投票一下</title>
+</head>
+
+<body>
+  {{targetOpenid}} <br\> {{openid}}
+</body>
+
+</html>

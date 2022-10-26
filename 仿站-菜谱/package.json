@@ -1,0 +1,62 @@
+{
+  "name": "first_react_app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@redux-devtools/extension": "^3.2.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "animate.css": "^4.1.1",
+    "antd-mobile": "^2.3.4",
+    "axios": "^0.27.2",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^8.0.4",
+    "react-router-dom": "^5.3.3",
+    "react-scripts": "5.0.1",
+    "react-transition-group": "^4.4.5",
+    "redux": "^4.2.0",
+    "redux-immutable": "^4.0.0",
+    "redux-thunk": "^2.4.1",
+    "reset.css": "^2.0.2",
+    "styled-components": "^5.3.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.19.1",
+    "babel-plugin-import": "^1.13.5",
+    "customize-cra": "^1.0.0",
+    "http-proxy-middleware": "^2.0.6",
+    "react-app-rewired": "^2.2.1",
+    "sass": "^1.55.0",
+    "postcss-pxtorem": "^5.1.1",
+    "redux-logger": "^3.0.6",
+    "mockjs": "^1.1.0"
+  }
+}

@@ -1,0 +1,54 @@
+.admin-container {
+  .logo_large {
+    height: 30px;
+    margin: 16px 45px;
+
+    img {
+      width: 110px;
+      height: 30px;
+    }
+  }
+
+  .logo_small {
+    height: 30px;
+    margin: 16px 25px;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .site-layout .site-layout-background {
+    background: #fff;
+    padding: 24px;
+    height: 86vh;
+    overflow-y: scroll;
+  }
+
+  .site-layout-header-background {
+    background: #fff;
+    text-align: right;
+
+    span {
+      margin: 20px;
+
+      &:last-child {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .logo-enter {
+    opacity: 0;
+  }
+
+  .logo-exit {
+    display: none;
+  }
+
+  .logo-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms;
+  }
+}
