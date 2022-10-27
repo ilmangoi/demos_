@@ -1,0 +1,44 @@
+{
+  "id": "3615189",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "custom-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3868282",
+      "name": "应用管理",
+      "font_class": "yingyongguanli",
+      "unicode": "eb67",
+      "unicode_decimal": 60263
+    },
+    {
+      "icon_id": "2126752",
+      "name": "257用户资料",
+      "font_class": "yonghuziliao",
+      "unicode": "e91b",
+      "unicode_decimal": 59675
+    },
+    {
+      "icon_id": "11372658",
+      "name": "订单",
+      "font_class": "dingdan",
+      "unicode": "e8ae",
+      "unicode_decimal": 59566
+    },
+    {
+      "icon_id": "11372783",
+      "name": "影院",
+      "font_class": "yingyuan",
+      "unicode": "e8c7",
+      "unicode_decimal": 59591
+    },
+    {
+      "icon_id": "1313810",
+      "name": "电影院",
+      "font_class": "dianying",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    }
+  ]
+}
