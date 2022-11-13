@@ -1,0 +1,66 @@
+{
+	"pages": [{
+		"path": "pages/index/index",
+		"style": {
+			// #ifdef H5
+			"navigationBarTitleText": "H5 - 首页",
+			// #endif
+			// #ifdef MP
+			"navigationBarTitleText": "MP - 首页",
+			// #endif
+			// #ifdef APP
+			"navigationBarTitleText": "APP - 首页",
+			// #endif
+			"enablePullDownRefresh": true
+		}
+	}, {
+		"path": "pages/category/category",
+		"style": {
+			"enablePullDownRefresh": false
+		}
+	}    ,{
+            "path" : "pages/center/center",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"subPackages": [{
+		"root": "subpages",
+		"pages": [{
+			"path": "detail/detail",
+			"style": {}
+		}]
+	}],
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#1387C9",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uniApp学习使用"
+	},
+	"tabBar": {
+		"color": "#000",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/center.png",
+			"selectedIconPath": "static/center-active.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/category/category",
+			"iconPath": "static/home.png",
+			"selectedIconPath": "static/home-active.png",
+			"text": "分类"
+		}, {
+			"pagePath": "pages/center/center",
+			"iconPath": "static/home.png",
+			"selectedIconPath": "static/home-active.png",
+			"text": "个人"
+		}]
+	}
+
+}

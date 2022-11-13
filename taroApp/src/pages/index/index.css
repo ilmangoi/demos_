@@ -1,0 +1,9 @@
+.film-item {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.film-item Image {
+  width: 200rpx;
+  height: 200rpx;
+}
